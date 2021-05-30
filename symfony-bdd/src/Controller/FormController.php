@@ -14,7 +14,7 @@ class FormController extends AbstractController
 {
 
     /**
-     * @Route ("/appel")
+     * @Route ("/appel", name="appelList")
      */
     public function AppeList()
     {
@@ -98,6 +98,31 @@ class FormController extends AbstractController
 
         return $this->redirectToRoute('appel_id', [
             'id' => $appel->getId()
+        ]);
+    }
+
+    /**
+     * @Route("/appel/remove/{id}", name="appel_id")
+     */
+    public function remove(int $id): Response
+    {
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $appel = $this->getDoctrine()
+            ->getRepository(Appel::class)
+            ->find($id);
+
+        if (!$appel) {
+            throw $this->createNotFoundException(
+                'No student found for id '.$id
+            );
+        }
+
+        $entityManager->remove($appel);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('appelList', [
+            'appel' => $appel
         ]);
     }
 
