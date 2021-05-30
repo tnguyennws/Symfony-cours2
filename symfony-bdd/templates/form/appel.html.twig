@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello FormulaireController!{% endblock %}
+{% block title %}Hello Appel List!{% endblock %}
 
 {% block body %}
 <style>
@@ -10,7 +10,10 @@
 
 <div class="example-wrapper">
 
+<h1>Hello Test! ✅</h1>
+
     {% for eleve in appel %}
+        {{ eleve.id }}<br/>
         {{ eleve.Nom }}<br/>
         {{ eleve.Prenom }}
         <hr/>

@@ -38,8 +38,15 @@ class FormController extends AbstractController
 
         $data = $form->getData();
 
-        var_dump($data);
-        die();
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $appel = new Appel();
+        $appel->setNom($data["Nom"]);
+        $appel->setPrenom($data["Prenom"]);
+
+        $entityManager->persist($appel);
+
+        $entityManager->flush();
 
         return $this->render('form/index.html.twig',
         [
