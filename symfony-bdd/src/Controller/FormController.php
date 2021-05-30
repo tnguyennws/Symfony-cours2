@@ -76,6 +76,31 @@ class FormController extends AbstractController
         ]));
     }
 
+    /**
+     * @Route("/appel/edit/{id}/{nom}/{prenom}")
+     */
+    public function update(int $id, string $nom, string $prenom): Response
+    {
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $appel = $entityManager->getRepository(Appel::class)->find($id);
+
+        if (!$appel) {
+            throw $this->createNotFoundException(
+                'No student found for id '.$id
+            );
+        }
+
+        $appel->setNom($nom);
+        $appel->setPrenom($prenom);
+        
+        $entityManager->flush();
+
+        return $this->redirectToRoute('appel_id', [
+            'id' => $appel->getId()
+        ]);
+    }
+
 
     /**
      * @Route("/form", name="form")
