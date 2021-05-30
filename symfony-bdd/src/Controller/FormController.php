@@ -55,6 +55,27 @@ class FormController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/appel/{id}", name="appel_id")
+     */
+    public function show(int $id): Response
+    {
+        $appel = $this->getDoctrine()
+            ->getRepository(Appel::class)
+            ->find($id);
+
+        if (!$appel) {
+            throw $this->createNotFoundException(
+                'No student found for id '.$id
+            );
+        }
+
+        return ($this->render('form/findList.html.twig',
+        [   'id' => $id,
+            'appel' => $appel
+        ]));
+    }
+
 
     /**
      * @Route("/form", name="form")
